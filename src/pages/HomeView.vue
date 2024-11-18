@@ -3,28 +3,35 @@
     <div class="text-white flex justify-between py-5">
       <p class="font-bold text-2xl">JAPHET BAZ</p>
       <div class="flex gap-5 font-bold">
-        <div>Home</div>
-        <div>Work</div>
-        <div>About</div>
+        <div class="cursor-pointer">Home</div>
+        <div class="cursor-pointer">Work</div>
+        <div class="cursor-pointer">
+          <div>About</div>
+        </div>
       </div>
     </div>
 
     <div class="h-full flex justify-center items-center">
       <div class="text-center flex flex-col items-center justify-center">
         <div class="pb-5">
-          <h2 class="text-7xl font-bold text-white">WEB & MOBILE Developper<br /></h2>
+          <h2 ref="title" class="text-7xl font-bold text-white">WEB & MOBILE Developer<br /></h2>
         </div>
-        <p class="text-gray-500 w-1/2 text-center">
+        <p ref="desc" class="text-gray-500 w-1/2 text-center">
           passionate with experience in web and mobile application development. I am constantly
           looking for new challenges to improve my skills and provide innovative solutions.
         </p>
-        <button class="border border-white px-3 py-2 mt-10 rounded-md font-bold text-white">
+        <button
+          ref="btn"
+          class="border border-white px-3 py-2 mt-10 rounded-md font-bold text-white"
+        >
           SEE MY WORK
         </button>
       </div>
+
+      <!-- Footer -->
       <div class="fixed bottom-0 left-0 w-full text-white text-center py-10">
         <div class="flex gap-3 justify-center">
-          <a href="">
+          <a href="" ref="box1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -37,7 +44,7 @@
               />
             </svg>
           </a>
-          <a href="">
+          <a href="" ref="box2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -50,7 +57,7 @@
               />
             </svg>
           </a>
-          <a href="">
+          <a href="" ref="box3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -73,4 +80,63 @@
     </div>
   </main>
 </template>
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap'
+
+// Créez une référence pour l'élément
+const title = ref(null)
+const desc = ref(null)
+const btn = ref(null)
+
+const box1 = ref(null)
+const box2 = ref(null)
+const box3 = ref(null)
+
+onMounted(() => {
+  // Animez l'élément avec GSAP
+  gsap.from(title.value, {
+    duration: 1,
+    y: -30,
+    ease: 'power2.out'
+  })
+
+  gsap.from(desc.value, {
+    duration: 2,
+    y: -30,
+    ease: 'power2.out'
+  })
+
+  gsap.from(btn.value, {
+    duration: 3,
+    y: -30,
+    ease: 'power2.out'
+  })
+
+  btn.value.addEventListener('mouseenter', () => {
+    gsap.to(btn.value, {
+      duration: 0.5,
+      background: 'linear-gradient(90deg, #9333ea, #1e3a8a)' // Gradient inversé
+    })
+  })
+
+  btn.value.addEventListener('mouseleave', () => {
+    gsap.to(btn.value, {
+      duration: 0.5,
+      background: 'linear-gradient(90deg, #1e3a8a, #9333ea)' // Gradient initial
+    })
+  })
+
+  gsap.from(box1.value, { opacity: 0, y: 100, duration: 1 })
+  gsap.from(box2.value, { opacity: 0, y: 100, duration: 1, delay: 0.5 })
+  gsap.from(box3.value, { opacity: 0, y: 100, duration: 1, delay: 1 })
+
+  box1.value.addEventListener('mouseenter', () => {
+    gsap.to(box1.value, { duration: 1, y: -10 })
+  })
+
+  box1.value.addEventListener('mouseleave', () => {
+    gsap.to(box1.value, { duration: 1, y: 0 }) // Retour à la position initiale
+  })
+})
+</script>
